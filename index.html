@@ -6,83 +6,30 @@
   <title>医药政策检索助手</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #e8f4ff, #f0f7ff);
-      font-family: 'PingFang SC', sans-serif;
-    }
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 48px 40px;
-      text-align: center;
-      box-shadow: 0 8px 32px rgba(22,119,255,0.12);
-      max-width: 400px;
-      width: 90%;
-    }
-    .icon { font-size: 64px; margin-bottom: 16px; }
-    h1 {
-      font-size: 22px;
-      color: #1d2129;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
-    p {
-      color: #86909c;
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 32px;
-    }
-    .btn {
-      display: inline-block;
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 50px;
+      line-height: 50px;
       background: linear-gradient(135deg, #1677ff, #0958d9);
-      color: white;
-      text-decoration: none;
-      padding: 14px 40px;
-      border-radius: 50px;
-      font-size: 16px;
+      color: #fff;
+      font-size: 17px;
       font-weight: bold;
-      box-shadow: 0 4px 16px rgba(22,119,255,0.35);
-      transition: all 0.2s;
+      text-align: center;
+      z-index: 999;
     }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(22,119,255,0.45);
-    }
-    .tags {
-      margin-top: 24px;
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .tag {
-      background: #e8f4ff;
-      color: #1677ff;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 12px;
+    iframe {
+      position: fixed;
+      top: 50px; left: 0; right: 0; bottom: 0;
+      width: 100%;
+      height: calc(100% - 50px);
+      border: none;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="icon">🏥</div>
-    <h1>医药政策检索助手</h1>
-    <p>基于AI的智能政策检索系统<br>支持法规查询、条文解读、合规咨询</p>
-    <a class="btn" href="https://www.coze.cn/store/bot/7622230610618597428" target="_blank">
-      立即开始查询
-    </a>
-    <div class="tags">
-      <span class="tag">药品注册</span>
-      <span class="tag">GMP规范</span>
-      <span class="tag">医保政策</span>
-      <span class="tag">流通监管</span>
-    </div>
-  </div>
+  <div class="header">🏥 医药政策检索助手</div>
+  <iframe src="https://www.coze.cn/store/bot/7622230610618597428" allow="microphone"></iframe>
 </body>
 </html>
