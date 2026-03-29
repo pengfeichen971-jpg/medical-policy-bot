@@ -33,12 +33,6 @@
       width: 100%;
       height: calc(100% - 50px);
     }
-    /* 强制 SDK iframe 撑满 */
-    #coze-chat iframe,
-    #coze-chat > div {
-      width: 100% !important;
-      height: 100% !important;
-    }
   </style>
 </head>
 <body>
@@ -47,18 +41,29 @@
   <div id="coze-chat"></div>
 
   <script>
-    // 动态加载 SDK，避免缓存问题
+    // =============================================
+    // ⬇️ 只需修改这两行
+    var BOT_ID = '7622230610618597428';       // 替换成你的 Bot ID
+    var PAT_TOKEN = 'pat_7YFJIJp8ewUHIdU1JApUelga2PLYIoxeQiwQIfsSbtnlWnQRAqT8NFAxJ3LJubrk'; // 替换成你的 pat_xxxx Token
+    // =============================================
+
     var script = document.createElement('script');
     script.src = 'https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.0.0-beta.4/libs/cn/index.js';
-    script.onload = function() {
+
+    script.onload = function () {
       try {
         new CozeWebSDK.WebChatClient({
           config: {
-            bot_id: 7622230610618597428',       // ← 替换这里
+            bot_id: BOT_ID,
           },
           auth: {
             type: 'token',
-            token: 'pat_7YFJIJp8ewUHIdU1JApUelga2PLYIoxeQiwQIfsSbtnlWnQRAqT8NFAxJ3LJubrk',     // ← 替换这里
+            token: PAT_TOKEN,
+            // ✅ 关键修复：必须提供 onRefreshToken 回调
+            onRefreshToken: function () {
+              // PAT Token 不会过期，直接返回同一个 token
+              return Promise.resolve(PAT_TOKEN);
+            },
           },
           ui: {
             base: {
@@ -75,19 +80,22 @@
             },
           },
         });
-        console.log('✅ Coze SDK 加载成功');
-      } catch(e) {
-        console.error('❌ SDK 初始化失败:', e);
+        console.log('✅ 初始化成功');
+      } catch (e) {
+        console.error('❌ 初始化失败:', e);
         document.getElementById('coze-chat').innerHTML =
-          '<div style="padding:40px;text-align:center;color:#666;">' +
-          '⚠️ 加载失败，请检查 Bot ID 和 Token 是否正确</div>';
+          '<div style="padding:60px;text-align:center;color:#999;font-size:15px;">' +
+          '⚠️ 加载失败，请检查 Bot ID 和 Token<br><br>' +
+          '<small>' + e.message + '</small></div>';
       }
     };
-    script.onerror = function() {
+
+    script.onerror = function () {
       document.getElementById('coze-chat').innerHTML =
-        '<div style="padding:40px;text-align:center;color:#666;">' +
-        '⚠️ SDK 脚本加载失败，请检查网络连接</div>';
+        '<div style="padding:60px;text-align:center;color:#999;font-size:15px;">' +
+        '⚠️ 网络异常，SDK 脚本加载失败，请刷新重试</div>';
     };
+
     document.head.appendChild(script);
   </script>
 
