@@ -2,102 +2,87 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>医药政策检索助手</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: #f0f2f5;
-      font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    body {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #e8f4ff, #f0f7ff);
+      font-family: 'PingFang SC', sans-serif;
     }
-    .header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 50px;
-      line-height: 50px;
-      background: linear-gradient(135deg, #1677ff, #0958d9);
-      color: #fff;
-      font-size: 17px;
-      font-weight: bold;
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 48px 40px;
       text-align: center;
-      z-index: 999;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 32px rgba(22,119,255,0.12);
+      max-width: 400px;
+      width: 90%;
     }
-    #coze-chat {
-      position: fixed;
-      top: 50px;
-      left: 0; right: 0; bottom: 0;
-      width: 100%;
-      height: calc(100% - 50px);
+    .icon { font-size: 64px; margin-bottom: 16px; }
+    h1 {
+      font-size: 22px;
+      color: #1d2129;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    p {
+      color: #86909c;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #1677ff, #0958d9);
+      color: white;
+      text-decoration: none;
+      padding: 14px 40px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      box-shadow: 0 4px 16px rgba(22,119,255,0.35);
+      transition: all 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(22,119,255,0.45);
+    }
+    .tags {
+      margin-top: 24px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .tag {
+      background: #e8f4ff;
+      color: #1677ff;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
     }
   </style>
 </head>
 <body>
-
-  <div class="header">🏥 医药政策检索助手</div>
-  <div id="coze-chat"></div>
-
-  <script>
-    // =============================================
-    // ⬇️ 只需修改这两行
-    var BOT_ID = '7622230610618597428';       // 替换成你的 Bot ID
-    var PAT_TOKEN = 'pat_7YFJIJp8ewUHIdU1JApUelga2PLYIoxeQiwQIfsSbtnlWnQRAqT8NFAxJ3LJubrk'; // 替换成你的 pat_xxxx Token
-    // =============================================
-
-    var script = document.createElement('script');
-    script.src = 'https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.0.0-beta.4/libs/cn/index.js';
-
-    script.onload = function () {
-      try {
-        new CozeWebSDK.WebChatClient({
-          config: {
-            bot_id: BOT_ID,
-          },
-          auth: {
-            type: 'token',
-            token: PAT_TOKEN,
-            // ✅ 关键修复：必须提供 onRefreshToken 回调
-            onRefreshToken: function () {
-              // PAT Token 不会过期，直接返回同一个 token
-              return Promise.resolve(PAT_TOKEN);
-            },
-          },
-          ui: {
-            base: {
-              el: document.getElementById('coze-chat'),
-              lang: 'zh-CN',
-              layout: 'pc',
-            },
-            chatBot: {
-              name: '医药政策检索助手',
-              description: '智能查询医药政策法规条文',
-            },
-            footer: {
-              isShow: false,
-            },
-          },
-        });
-        console.log('✅ 初始化成功');
-      } catch (e) {
-        console.error('❌ 初始化失败:', e);
-        document.getElementById('coze-chat').innerHTML =
-          '<div style="padding:60px;text-align:center;color:#999;font-size:15px;">' +
-          '⚠️ 加载失败，请检查 Bot ID 和 Token<br><br>' +
-          '<small>' + e.message + '</small></div>';
-      }
-    };
-
-    script.onerror = function () {
-      document.getElementById('coze-chat').innerHTML =
-        '<div style="padding:60px;text-align:center;color:#999;font-size:15px;">' +
-        '⚠️ 网络异常，SDK 脚本加载失败，请刷新重试</div>';
-    };
-
-    document.head.appendChild(script);
-  </script>
-
+  <div class="card">
+    <div class="icon">🏥</div>
+    <h1>医药政策检索助手</h1>
+    <p>基于AI的智能政策检索系统<br>支持法规查询、条文解读、合规咨询</p>
+    <a class="btn" href="https://www.coze.cn/store/bot/7622230610618597428" target="_blank">
+      立即开始查询
+    </a>
+    <div class="tags">
+      <span class="tag">药品注册</span>
+      <span class="tag">GMP规范</span>
+      <span class="tag">医保政策</span>
+      <span class="tag">流通监管</span>
+    </div>
+  </div>
 </body>
 </html>
