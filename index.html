@@ -1,146 +1,25 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>医药政策检索助手</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #e8f4ff 0%, #f0f7ff 50%, #e8f0ff 100%);
-      font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .card {
-      background: white;
-      border-radius: 24px;
-      padding: 48px 40px 40px;
-      text-align: center;
-      box-shadow: 0 8px 40px rgba(22,119,255,0.12);
-      max-width: 420px;
-      width: 100%;
-    }
-    .icon { font-size: 72px; margin-bottom: 20px; }
-    h1 {
-      font-size: 24px;
-      color: #1d2129;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .subtitle {
-      color: #86909c;
-      font-size: 14px;
-      line-height: 1.8;
-      margin-bottom: 32px;
-    }
-    .btn {
-      display: block;
-      background: linear-gradient(135deg, #1677ff, #0958d9);
-      color: white;
-      text-decoration: none;
-      padding: 16px;
-      border-radius: 50px;
-      font-size: 17px;
-      font-weight: bold;
-      box-shadow: 0 4px 20px rgba(22,119,255,0.4);
-      transition: all 0.2s;
-      margin-bottom: 12px;
-    }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(22,119,255,0.5);
-    }
-    .btn:active { transform: translateY(0); }
-    .hint {
-      color: #c9cdd4;
-      font-size: 12px;
-      margin-bottom: 28px;
-    }
-    .divider {
-      border: none;
-      border-top: 1px solid #f2f3f5;
-      margin: 24px 0;
-    }
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-      margin-bottom: 24px;
-    }
-    .tag {
-      background: #f0f7ff;
-      color: #1677ff;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 13px;
-      border: 1px solid #d6e8ff;
-    }
-    .features {
-      text-align: left;
-      background: #f7f8fa;
-      border-radius: 12px;
-      padding: 16px 20px;
-    }
-    .feature-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 6px 0;
-      font-size: 14px;
-      color: #4e5969;
-    }
-    .feature-item span { font-size: 16px; }
-    .footer {
-      margin-top: 24px;
-      color: #c9cdd4;
-      font-size: 12px;
-      text-align: center;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>医药政策检索助手</title>
 </head>
-<body>
-
-  <div class="card">
-    <div class="icon">🏥</div>
-    <h1>医药政策检索助手</h1>
-    <p class="subtitle">
-      基于 AI 的智能政策检索系统<br>
-      精准查询法规条文 · 专业解读政策内容
-    </p>
-
-    <a class="btn" href="https://www.coze.cn/store/bot/7622230610618597428" target="_blank">
-      🚀 立即开始查询
-    </a>
-    <p class="hint">点击后在新窗口打开，无需下载安装</p>
-
-    <div class="tags">
-      <span class="tag">💊 药品注册</span>
-      <span class="tag">🏭 GMP规范</span>
-      <span class="tag">💰 医保政策</span>
-      <span class="tag">🚚 流通监管</span>
-      <span class="tag">📋 GSP规范</span>
-      <span class="tag">🔬 临床试验</span>
-    </div>
-
-    <hr class="divider">
-
-    <div class="features">
-      <div class="feature-item"><span>🔍</span> 精准检索政策条文原文</div>
-      <div class="feature-item"><span>📖</span> AI 智能解读法规含义</div>
-      <div class="feature-item"><span>⚡</span> 秒级响应，实时问答</div>
-      <div class="feature-item"><span>🗂️</span> 覆盖 NMPA、医保局等权威来源</div>
-    </div>
+<body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#e8f4ff;font-family:sans-serif;">
+<div style="background:#fff;border-radius:20px;padding:48px 40px;text-align:center;box-shadow:0 8px 40px rgba(22,119,255,0.15);max-width:400px;width:90%;">
+  <div style="font-size:64px;margin-bottom:16px;">🏥</div>
+  <h1 style="font-size:22px;color:#1d2129;margin-bottom:12px;">医药政策检索助手</h1>
+  <p style="color:#86909c;font-size:14px;line-height:1.8;margin-bottom:32px;">基于 AI 的智能政策检索系统<br>精准查询法规条文 · 专业解读政策内容</p>
+  <a href="https://www.coze.cn/store/bot/7622230610618597428" target="_blank"
+     style="display:block;background:linear-gradient(135deg,#1677ff,#0958d9);color:#fff;text-decoration:none;padding:16px;border-radius:50px;font-size:17px;font-weight:bold;margin-bottom:24px;">
+    🚀 立即开始查询
+  </a>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">
+    <span style="background:#f0f7ff;color:#1677ff;padding:5px 12px;border-radius:20px;font-size:13px;">💊 药品注册</span>
+    <span style="background:#f0f7ff;color:#1677ff;padding:5px 12px;border-radius:20px;font-size:13px;">🏭 GMP规范</span>
+    <span style="background:#f0f7ff;color:#1677ff;padding:5px 12px;border-radius:20px;font-size:13px;">💰 医保政策</span>
+    <span style="background:#f0f7ff;color:#1677ff;padding:5px 12px;border-radius:20px;font-size:13px;">🚚 流通监管</span>
   </div>
-
-  <div class="footer">内容由 AI 生成，仅供参考，请以官方发布为准</div>
-
+</div>
 </body>
 </html>
-
-
