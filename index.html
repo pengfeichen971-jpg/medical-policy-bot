@@ -4,22 +4,117 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>医药政策检索助手</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:#f0f2f5;height:100vh;display:flex;flex-direction:column}
+.header{background:linear-gradient(135deg,#1677ff,#0958d9);color:#fff;padding:14px;text-align:center;font-size:17px;font-weight:bold;flex-shrink:0}
+.messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:75%;padding:12px 16px;border-radius:16px;font-size:14px;line-height:1.6;word-break:break-word}
+.msg.user{background:#1677ff;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.msg.bot{background:#fff;color:#1d2129;align-self:flex-start;border-bottom-left-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+.msg.loading{color:#86909c;font-style:italic}
+.input-area{background:#fff;padding:12px 16px;display:flex;gap:10px;border-top:1px solid #f0f0f0;flex-shrink:0}
+textarea{flex:1;border:1px solid #e5e6eb;border-radius:12px;padding:10px 14px;font-size:14px;resize:none;height:44px;outline:none;font-family:inherit}
+textarea:focus{border-color:#1677ff}
+button{background:#1677ff;color:#fff;border:none;border-radius:12px;padding:0 20px;font-size:14px;cursor:pointer;white-space:nowrap}
+button:disabled{background:#c9cdd4;cursor:not-allowed}
+.welcome{text-align:center;color:#86909c;font-size:13px;padding:20px}
+</style>
 </head>
-<body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#e8f4ff;font-family:sans-serif;">
-<div style="background:#fff;border-radius:20px;padding:48px 40px;text-align:center;box-shadow:0 8px 40px rgba(22,119,255,0.15);max-width:400px;width:90%;">
-  <div style="font-size:64px;margin-bottom:16px;">🏥</div>
-  <h1 style="font-size:22px;color:#1d2129;margin-bottom:12px;">医药政策检索助手</h1>
-  <p style="color:#86909c;font-size:14px;line-height:1.8;margin-bottom:32px;">基于 AI 的智能政策检索系统<br>精准查询法规条文 · 专业解读政策内容</p>
-  <a href="https://www.coze.cn/store/bot/7622230610618597428" target="_blank"
-     style="display:block;background:linear-gradient(135deg,#1677ff,#0958d9);color:#fff;text-decoration:none;padding:16px;border-radius:50px;font-size:17px;font-weight:bold;margin-bottom:24px;">
-    🚀 立即开始查询
-  </a>
-  <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">
-    <span style="background:#f0f7ff;color:#1677ff;padding:5px 12px;border-radius:20px;font-size:13px;">💊 药品注册</span>
-    <span style="background:#f0f7ff;color:#1677ff;padding:5px 12px;border-radius:20px;font-size:13px;">🏭 GMP规范</span>
-    <span style="background:#f0f7ff;color:#1677ff;padding:5px 12px;border-radius:20px;font-size:13px;">💰 医保政策</span>
-    <span style="background:#f0f7ff;color:#1677ff;padding:5px 12px;border-radius:20px;font-size:13px;">🚚 流通监管</span>
-  </div>
+<body>
+<div class="header">🏥 医药政策检索助手</div>
+<div class="messages" id="messages">
+  <div class="welcome">您好！请输入您想查询的医药政策问题</div>
 </div>
+<div class="input-area">
+  <textarea id="input" placeholder="例如：药品委托生产需要满足哪些GMP条件？" onkeydown="handleKey(event)"></textarea>
+  <button id="sendBtn" onclick="sendMessage()">发送</button>
+</div>
+
+<script>
+const BOT_ID = '7622230610618597428';
+const TOKEN = pat_7YFJIJp8ewUHIdU1JApUelga2PLYIoxeQiwQIfsSbtnlWnQRAqT8NFAxJ3LJubrk; // ← 替换成你的新Token
+let conversationId = null;
+
+function handleKey(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}
+}
+
+function addMsg(text, role){
+  const div = document.createElement('div');
+  div.className = 'msg ' + role;
+  div.textContent = text;
+  document.getElementById('messages').appendChild(div);
+  div.scrollIntoView({behavior:'smooth'});
+  return div;
+}
+
+async function sendMessage(){
+  const input = document.getElementById('input');
+  const btn = document.getElementById('sendBtn');
+  const text = input.value.trim();
+  if(!text) return;
+  
+  input.value = '';
+  btn.disabled = true;
+  addMsg(text, 'user');
+  const loading = addMsg('正在检索政策库，请稍候...', 'bot loading');
+
+  try {
+    // 第一步：创建对话
+    const chatRes = await fetch('https://api.coze.cn/v3/chat', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + TOKEN,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        bot_id: BOT_ID,
+        user_id: 'user_001',
+        stream: false,
+        auto_save_history: true,
+        conversation_id: conversationId || undefined,
+        additional_messages: [{role:'user', content: text, content_type:'text'}]
+      })
+    });
+    const chatData = await chatRes.json();
+    
+    if(chatData.code !== 0){
+      loading.textContent = '请求失败：' + (chatData.msg || '未知错误');
+      loading.className = 'msg bot';
+      btn.disabled = false;
+      return;
+    }
+
+    conversationId = chatData.data.conversation_id;
+    const chatId = chatData.data.id;
+
+    // 第二步：轮询等待结果
+    let answer = '';
+    for(let i=0; i<30; i++){
+      await new Promise(r=>setTimeout(r,1500));
+      const msgRes = await fetch(
+        `https://api.coze.cn/v3/chat/message/list?chat_id=${chatId}&conversation_id=${conversationId}`,
+        {headers:{'Authorization':'Bearer '+TOKEN}}
+      );
+      const msgData = await msgRes.json();
+      if(msgData.code === 0 && msgData.data){
+        const answer_msg = msgData.data.find(m=>m.role==='assistant'&&m.type==='answer');
+        if(answer_msg){
+          answer = answer_msg.content;
+          break;
+        }
+      }
+    }
+
+    loading.textContent = answer || '未获取到回复，请重试';
+    loading.className = 'msg bot';
+  } catch(e) {
+    loading.textContent = '网络错误，请检查连接后重试';
+    loading.className = 'msg bot';
+  }
+  btn.disabled = false;
+}
+</script>
 </body>
 </html>
