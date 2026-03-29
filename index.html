@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>医药政策检索助手</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { height: 100vh; display: flex; flex-direction: column; 
+           background: #f5f6fa; font-family: 'PingFang SC', sans-serif; }
+    .header {
+      background: #1677ff;
+      color: white;
+      padding: 12px 16px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+    }
+    #chat-container { flex: 1; width: 100%; border: none; }
+  </style>
+</head>
+<body>
+  <div class="header">🏥 医药政策检索助手</div>
+  
+  <!-- Coze Chat SDK -->
+  <script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.0.0-beta.4/libs/cn/index.js"></script>
+  
+  <div id="chat-container"></div>
+  
+  <script>
+    new CozeWebSDK.WebChatClient({
+      config: {
+        bot_id: '7622230610618597428',  // 替换成第一步记录的Bot ID
+      },
+      auth: {
+        type: 'token',
+        token: 'pat_7YFJIJp8ewUHIdU1JApUelga2PLYIoxeQiwQIfsSbtnlWnQRAqT8NFAxJ3LJubrk',  // 替换成第二步的Token
+      },
+      ui: {
+        base: {
+          // 挂载到页面
+          el: document.getElementById('chat-container'),
+          // 内嵌模式（非弹窗）
+          layout: 'pc',
+          lang: 'zh-CN',
+        },
+      },
+    });
+  </script>
+</body>
+</html>
